@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+						   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        				    http://www.springframework.org/schema/data/jpa
+       						http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+        				   http://www.springframework.org/schema/tx
+        				   http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+
+
+
+	<bean id="modelo" class="modelo.Modelo">
+		<property name="usuarios" ref="usuarioRepositorio" />
+		<property name="granjas" ref="granjaRepositorio" />
+		<property name="cooperativas" ref="cooperativaRepositorio" />
+		<property name="animales" ref="animalRepositorio" />
+		<property name="espacios" ref="espacioRepositorio" />
+		<property name="campos" ref="campoRepositorio" />
+		<property name="infraestructuras" ref="infraestructuraRepositorio" />
+		<property name="precios" ref="precioRepositorio" />
+		<property name="recursos" ref="recursoRepositorio" />
+		<property name="tiposInfraestructuras" ref="tiposInfraestructuraRepositorio" />	
+	</bean>
+	
+
+	<jpa:repositories base-package="dao" />
+
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="packagesToScan" value="dominio" />
+		<property name="jpaVendorAdapter" ref="jpaVendorAdapter"></property>
+	</bean>
+
+	<bean id="jpaVendorAdapter"
+		class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+		<property name="database" value="MYSQL" />
+		<property name="showSql" value="true">
+		</property>
+		<property name="generateDdl" value="false"></property>
+		<property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect" />
+	</bean>
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/BGranja" />
+		<property name="username" value="control" />
+		<property name="password" value="" />
+	</bean>
+
+	<tx:annotation-driven transaction-manager="transactionManager"
+		proxy-target-class="true" />
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+
+	<bean
+		class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+	<bean
+		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+
+</beans>
