@@ -24,7 +24,7 @@
 		<jdk.version>1.8.0</jdk.version>
 		<spring.version>1.6.1.RELEASE</spring.version>
 		<hibernate.version>4.3.9.Final</hibernate.version>
-		<mysql.version>5.1.35</mysql.version>
+		<mysql.version>8.0.28</mysql.version>
 		<aspecj.weaver.version>1.8.5</aspecj.weaver.version>
 	</properties>
 
